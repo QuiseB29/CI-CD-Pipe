@@ -1,0 +1,29 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - feature/tests
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Updated to v3 to support newer Node.js
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3  # Ensure we're using the latest setup-node action
+        with:
+          node-version: '20.x'  # Specify Node.js version to use (16.x or 20.x)
+
+      - name: Install dependencies using lock file
+        run: npm ci  # Use npm ci to install dependencies
+
+      - name: Run tests
+        run: npm test  # Run your test suite
